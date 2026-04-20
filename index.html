@@ -344,6 +344,31 @@
     from { opacity: 0; transform: scale(0.88); }
     to   { opacity: 1; transform: scale(1); }
   }
+  /* ── Turtle breathing ── */
+.turtle {
+  animation: breathe 6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translate(60px,600px) rotate(-12deg) scale(1); }
+  50%      { transform: translate(60px,596px) rotate(-12deg) scale(1.015); }
+}
+/* ── Bubbles ── */
+.bubbles circle {
+  fill: rgba(255,255,255,0.6);
+  animation: rise 6s infinite ease-in;
+}
+
+.bubbles circle:nth-child(1) { animation-delay: 0s; }
+.bubbles circle:nth-child(2) { animation-delay: 2s; }
+.bubbles circle:nth-child(3) { animation-delay: 4s; }
+
+@keyframes rise {
+  0%   { transform: translateY(0); opacity: 0; }
+  20%  { opacity: 0.6; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
 </style>
 </head>
 <body>
@@ -363,7 +388,7 @@
   <ellipse cx="1280" cy="120" rx="280" ry="200" fill="#e8dece" opacity="0.6"/>
 
   <!-- ─── SCHILDKRÖTE (links unten) ─── -->
-  <g transform="translate(60,600) rotate(-12)" opacity="0.22">
+  <g class="turtle" transform="translate(60,600) rotate(-12)" opacity="0.22">
     <!-- Körper -->
     <ellipse cx="110" cy="90" rx="90" ry="68" fill="#7a9478"/>
     <!-- Panzer-Muster (Hexagone) -->
@@ -382,6 +407,10 @@
     <ellipse cx="150" cy="148" rx="20" ry="11" fill="#7a9478" transform="rotate(20,150,148)"/>
     <ellipse cx="58" cy="42" rx="18" ry="10" fill="#7a9478" transform="rotate(20,58,42)"/>
     <ellipse cx="162" cy="42" rx="18" ry="10" fill="#7a9478" transform="rotate(-20,162,42)"/>
+  <g class="bubbles">
+  <circle cx="210" cy="40" r="4"/>
+  <circle cx="225" cy="20" r="3"/>
+  <circle cx="240" cy="0" r="2"/>
   </g>
 
   <!-- ─── GIRAFFE (rechts) ─── -->
