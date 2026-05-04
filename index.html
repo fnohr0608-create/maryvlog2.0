@@ -87,8 +87,7 @@
   .tutorial-btn {
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
     background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
     color: white;
     border: none;
@@ -100,16 +99,16 @@
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 0 rgba(196,112,58,0.4);
-    animation: tutorialPulse 2.5s ease-in-out infinite, fadeDown 0.8s ease both;
-    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 24px rgba(196,112,58,0.45);
+    animation: tutorialPulse 2.5s ease-in-out infinite;
     width: 90px;
+    /* No transition here – avoids fighting the animation on hover */
   }
 
   .tutorial-btn:hover {
-    transform: translateY(-50%) scale(1.06);
+    /* Override animation with a static scale; no transform conflict */
+    animation: tutorialPulseHover 2.5s ease-in-out infinite;
     box-shadow: 0 10px 32px rgba(196,112,58,0.6), 0 0 0 6px rgba(196,112,58,0.15);
-    animation: none;
   }
 
   .tutorial-btn .play-icon {
@@ -147,6 +146,11 @@
   @keyframes tutorialPulse {
     0%, 100% { box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 0 rgba(196,112,58,0.4); }
     50%       { box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 10px rgba(196,112,58,0); }
+  }
+
+  @keyframes tutorialPulseHover {
+    0%, 100% { box-shadow: 0 10px 32px rgba(196,112,58,0.6), 0 0 0 4px rgba(196,112,58,0.25); }
+    50%       { box-shadow: 0 10px 32px rgba(196,112,58,0.6), 0 0 0 12px rgba(196,112,58,0); }
   }
 
   @keyframes badgeBounce {
@@ -479,7 +483,7 @@
   </g>
 
   <!-- ─── GIRAFFE (oben rechts, ragt aus der Ecke) ─── -->
-  <g transform="translate(1190,-55) scale(0.88)" opacity="0.20">
+  <g transform="translate(890,-55) scale(0.88)" opacity="0.20">
     <rect x="88" y="40" width="48" height="280" rx="24" fill="#c8973a"/>
     <ellipse cx="112" cy="35" rx="28" ry="22" fill="#c8973a"/>
     <ellipse cx="112" cy="52" rx="16" ry="10" fill="#d4a84a"/>
