@@ -44,12 +44,19 @@
     padding: 40px 20px 80px;
   }
 
+  /* ── Header wrapper ── */
+  .header-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 48px;
+    animation: fadeDown 0.8s ease both;
+  }
+
   /* ── Header ── */
   header {
     text-align: center;
-    margin-bottom: 48px;
-    animation: fadeDown 0.8s ease both;
-    position: relative;
+    flex: 1;
   }
 
   header .subtitle {
@@ -85,9 +92,7 @@
 
   /* ── Tutorial Button ── */
   .tutorial-btn {
-    position: absolute;
-    left: 0;
-    top: 0;
+    flex-shrink: 0;
     background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
     color: white;
     border: none;
@@ -102,7 +107,7 @@
     box-shadow: 0 6px 24px rgba(196,112,58,0.45);
     animation: tutorialPulse 2.5s ease-in-out infinite;
     width: 90px;
-    /* No transition here – avoids fighting the animation on hover */
+    position: relative;
   }
 
   .tutorial-btn:hover {
@@ -483,7 +488,7 @@
   </g>
 
   <!-- ─── GIRAFFE (oben rechts, ragt aus der Ecke) ─── -->
-  <g transform="translate(1190,50) scale(0.88)" opacity="0.20">
+  <g transform="translate(1190,-55) scale(0.88)" opacity="0.20">
     <rect x="88" y="40" width="48" height="280" rx="24" fill="#c8973a"/>
     <ellipse cx="112" cy="35" rx="28" ry="22" fill="#c8973a"/>
     <ellipse cx="112" cy="52" rx="16" ry="10" fill="#d4a84a"/>
@@ -523,7 +528,7 @@
 
 <div class="page">
 
-  <header>
+  <div class="header-wrap">
     <!-- Tutorial-Button links neben der Überschrift -->
     <button class="tutorial-btn" onclick="openTutorial()" title="Zuerst schauen! So funktioniert der Kalender">
       <span class="tutorial-badge">Zuerst!</span>
@@ -531,10 +536,12 @@
       <span class="btn-label">Wie's geht</span>
     </button>
 
-    <p class="subtitle">Ein kleines Tagebuch für dich</p>
-    <h1>Meine Zeit ohne dich, <em>aber mit dir</em></h1>
-    <div class="header-line"></div>
-  </header>
+    <header>
+      <p class="subtitle">Ein kleines Tagebuch für dich</p>
+      <h1>Meine Zeit ohne dich, <em>aber mit dir</em></h1>
+      <div class="header-line"></div>
+    </header>
+  </div>
 
   <div class="month-nav">
     <button id="prevBtn" onclick="changeMonth(-1)">&#8592;</button>
