@@ -28,7 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* ── SVG Background ── */
   .bg-illustration {
     position: fixed;
     inset: 0;
@@ -37,7 +36,6 @@
     overflow: hidden;
   }
 
-  /* ── Page Layout ── */
   .page {
     position: relative;
     z-index: 1;
@@ -51,6 +49,7 @@
     text-align: center;
     margin-bottom: 48px;
     animation: fadeDown 0.8s ease both;
+    position: relative;
   }
 
   header .subtitle {
@@ -82,6 +81,77 @@
     background: linear-gradient(to right, var(--rust), var(--gold));
     margin: 18px auto 0;
     border-radius: 2px;
+  }
+
+  /* ── Tutorial Button ── */
+  .tutorial-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, var(--rust) 0%, var(--gold) 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 14px 16px;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 0 rgba(196,112,58,0.4);
+    animation: tutorialPulse 2.5s ease-in-out infinite, fadeDown 0.8s ease both;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 90px;
+  }
+
+  .tutorial-btn:hover {
+    transform: translateY(-50%) scale(1.06);
+    box-shadow: 0 10px 32px rgba(196,112,58,0.6), 0 0 0 6px rgba(196,112,58,0.15);
+    animation: none;
+  }
+
+  .tutorial-btn .play-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+
+  .tutorial-btn .btn-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.3;
+    opacity: 0.95;
+  }
+
+  .tutorial-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e74c3c;
+    color: white;
+    font-size: 0.58rem;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    padding: 3px 7px;
+    border-radius: 20px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(231,76,60,0.5);
+    animation: badgeBounce 1.8s ease-in-out infinite;
+  }
+
+  @keyframes tutorialPulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 0 rgba(196,112,58,0.4); }
+    50%       { box-shadow: 0 6px 24px rgba(196,112,58,0.45), 0 0 0 10px rgba(196,112,58,0); }
+  }
+
+  @keyframes badgeBounce {
+    0%, 100% { transform: scale(1); }
+    50%       { transform: scale(1.12); }
   }
 
   /* ── Month Navigation ── */
@@ -176,9 +246,7 @@
     transition: all 0.2s;
   }
 
-  .day.empty {
-    background: transparent;
-  }
+  .day.empty { background: transparent; }
 
   .day.no-video {
     color: #c8bfb4;
@@ -227,9 +295,7 @@
     animation: fadeIn 0.25s ease;
   }
 
-  .modal-overlay.open {
-    display: flex;
-  }
+  .modal-overlay.open { display: flex; }
 
   .modal {
     background: var(--cream);
@@ -344,115 +410,102 @@
     from { opacity: 0; transform: scale(0.88); }
     to   { opacity: 1; transform: scale(1); }
   }
+
   /* ── Turtle breathing ── */
-.turtle {
-  animation: breathe 6s ease-in-out infinite;
-  transform-origin: center;
-}
+  .turtle {
+    animation: breathe 6s ease-in-out infinite;
+    transform-origin: center;
+  }
 
-@keyframes breathe {
-  0%, 100% { transform: translate(60px,600px) rotate(-12deg) scale(1); }
-  50%      { transform: translate(60px,596px) rotate(-12deg) scale(1.015); }
-}
-/* ── Bubbles ── */
-.bubbles circle {
-  fill: rgba(255,255,255,0.6);
-  animation: rise 6s infinite ease-in;
-}
+  @keyframes breathe {
+    0%, 100% { transform: translate(60px,600px) rotate(-12deg) scale(1); }
+    50%      { transform: translate(60px,596px) rotate(-12deg) scale(1.015); }
+  }
 
-.bubbles circle:nth-child(1) { animation-delay: 0s; }
-.bubbles circle:nth-child(2) { animation-delay: 2s; }
-.bubbles circle:nth-child(3) { animation-delay: 4s; }
+  /* ── Bubbles ── */
+  .bubbles circle {
+    fill: rgba(255,255,255,0.6);
+    animation: rise 6s infinite ease-in;
+  }
+  .bubbles circle:nth-child(1) { animation-delay: 0s; }
+  .bubbles circle:nth-child(2) { animation-delay: 2s; }
+  .bubbles circle:nth-child(3) { animation-delay: 4s; }
 
-@keyframes rise {
-  0%   { transform: translateY(0); opacity: 0; }
-  20%  { opacity: 0.6; }
-  100% { transform: translateY(-60px); opacity: 0; }
-}
+  @keyframes rise {
+    0%   { transform: translateY(0); opacity: 0; }
+    20%  { opacity: 0.6; }
+    100% { transform: translateY(-60px); opacity: 0; }
+  }
+
+  @media (max-width: 600px) {
+    .tutorial-btn { width: 70px; padding: 10px; }
+    .tutorial-btn .play-icon { font-size: 1.4rem; }
+    .tutorial-btn .btn-label { font-size: 0.58rem; }
+  }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════
-     BACKGROUND SVG: Schildkröte + Giraffe
-═══════════════════════════════════════════ -->
 <div class="bg-illustration">
 <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <filter id="blur-bg"><feGaussianBlur stdDeviation="0.5"/></filter>
   </defs>
 
-  <!-- soft warm wash -->
   <rect width="1440" height="900" fill="#f5efe3"/>
   <ellipse cx="200" cy="750" rx="320" ry="220" fill="#ede3d3" opacity="0.7"/>
   <ellipse cx="1280" cy="120" rx="280" ry="200" fill="#e8dece" opacity="0.6"/>
 
   <!-- ─── SCHILDKRÖTE (links unten) ─── -->
   <g class="turtle" transform="translate(60,600) rotate(-12)" opacity="0.22">
-    <!-- Körper -->
     <ellipse cx="110" cy="90" rx="90" ry="68" fill="#7a9478"/>
-    <!-- Panzer-Muster (Hexagone) -->
     <ellipse cx="110" cy="90" rx="72" ry="54" fill="none" stroke="#3d6b3a" stroke-width="2.5"/>
     <polygon points="110,48 135,62 135,90 110,104 85,90 85,62" fill="none" stroke="#3d6b3a" stroke-width="1.8"/>
     <polygon points="110,90 135,104 135,132 110,146 85,132 85,104" fill="none" stroke="#3d6b3a" stroke-width="1.8"/>
     <polygon points="150,70 175,84 175,112 150,126 125,112 125,84" fill="none" stroke="#3d6b3a" stroke-width="1.5"/>
     <polygon points="70,70 95,84 95,112 70,126 45,112 45,84" fill="none" stroke="#3d6b3a" stroke-width="1.5"/>
-    <!-- Kopf -->
     <ellipse cx="195" cy="78" rx="22" ry="17" fill="#7a9478"/>
     <circle cx="204" cy="72" r="3.5" fill="#3d6b3a"/>
-    <!-- Schwanz -->
     <path d="M25,95 Q-5,110 -18,130" stroke="#7a9478" stroke-width="10" stroke-linecap="round" fill="none"/>
-    <!-- Beine -->
     <ellipse cx="70" cy="148" rx="20" ry="11" fill="#7a9478" transform="rotate(-20,70,148)"/>
     <ellipse cx="150" cy="148" rx="20" ry="11" fill="#7a9478" transform="rotate(20,150,148)"/>
     <ellipse cx="58" cy="42" rx="18" ry="10" fill="#7a9478" transform="rotate(20,58,42)"/>
     <ellipse cx="162" cy="42" rx="18" ry="10" fill="#7a9478" transform="rotate(-20,162,42)"/>
-  <g class="bubbles">
-  <circle cx="210" cy="40" r="4"/>
-  <circle cx="225" cy="20" r="3"/>
-  <circle cx="240" cy="0" r="2"/>
+    <g class="bubbles">
+      <circle cx="210" cy="40" r="4"/>
+      <circle cx="225" cy="20" r="3"/>
+      <circle cx="240" cy="0" r="2"/>
+    </g>
   </g>
 
-  <!-- ─── GIRAFFE (rechts) ─── -->
-  <g transform="translate(1150,140) scale(0.9)" opacity="0.18">
-    <!-- langer Hals -->
+  <!-- ─── GIRAFFE (oben rechts, ragt aus der Ecke) ─── -->
+  <g transform="translate(1190,-55) scale(0.88)" opacity="0.20">
     <rect x="88" y="40" width="48" height="280" rx="24" fill="#c8973a"/>
-    <!-- Kopf -->
     <ellipse cx="112" cy="35" rx="28" ry="22" fill="#c8973a"/>
-    <!-- Schnauze -->
     <ellipse cx="112" cy="52" rx="16" ry="10" fill="#d4a84a"/>
-    <!-- Auge -->
     <circle cx="122" cy="28" r="5" fill="#3d2b1a"/>
     <circle cx="123.5" cy="26.5" r="1.8" fill="white"/>
-    <!-- Össicone (Hörner) -->
     <rect x="104" y="12" width="7" height="20" rx="3" fill="#c8973a"/>
     <circle cx="107" cy="11" r="5" fill="#d4b896"/>
     <rect x="120" y="10" width="7" height="18" rx="3" fill="#c8973a"/>
     <circle cx="123" cy="9" r="5" fill="#d4b896"/>
-    <!-- Körper -->
     <ellipse cx="112" cy="380" rx="72" ry="90" fill="#c8973a"/>
-    <!-- Flecken Hals -->
     <ellipse cx="100" cy="120" rx="12" ry="18" fill="#a06820" opacity="0.5"/>
     <ellipse cx="124" cy="160" rx="10" ry="14" fill="#a06820" opacity="0.5"/>
     <ellipse cx="96" cy="200" rx="13" ry="16" fill="#a06820" opacity="0.5"/>
     <ellipse cx="120" cy="240" rx="11" ry="13" fill="#a06820" opacity="0.5"/>
     <ellipse cx="98" cy="275" rx="9" ry="12" fill="#a06820" opacity="0.45"/>
-    <!-- Flecken Körper -->
     <ellipse cx="90" cy="350" rx="20" ry="26" fill="#a06820" opacity="0.45"/>
     <ellipse cx="132" cy="370" rx="16" ry="22" fill="#a06820" opacity="0.45"/>
     <ellipse cx="105" cy="415" rx="18" ry="20" fill="#a06820" opacity="0.4"/>
-    <!-- Beine -->
     <rect x="68" y="455" width="22" height="130" rx="11" fill="#c8973a"/>
     <rect x="102" y="460" width="22" height="130" rx="11" fill="#c8973a"/>
-    <!-- Hufe -->
     <rect x="66" y="578" width="26" height="14" rx="7" fill="#3d2b1a"/>
     <rect x="100" y="583" width="26" height="14" rx="7" fill="#3d2b1a"/>
-    <!-- Schwanz -->
     <path d="M148,430 Q175,470 165,510 Q158,530 170,545" stroke="#c8973a" stroke-width="8" stroke-linecap="round" fill="none"/>
     <path d="M170,545 Q175,555 168,562 Q163,568 172,572" stroke="#a06820" stroke-width="6" stroke-linecap="round" fill="none"/>
   </g>
 
-  <!-- zarte Blätter-/Gras-Dekoration unten -->
   <g opacity="0.13" fill="#7a9478">
     <ellipse cx="400" cy="895" rx="18" ry="40" transform="rotate(-15,400,895)"/>
     <ellipse cx="430" cy="890" rx="14" ry="32" transform="rotate(10,430,890)"/>
@@ -464,12 +517,16 @@
 </svg>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════════ -->
 <div class="page">
 
   <header>
+    <!-- Tutorial-Button links neben der Überschrift -->
+    <button class="tutorial-btn" onclick="openTutorial()" title="Zuerst schauen! So funktioniert der Kalender">
+      <span class="tutorial-badge">Zuerst!</span>
+      <span class="play-icon">▶️</span>
+      <span class="btn-label">Wie's geht</span>
+    </button>
+
     <p class="subtitle">Ein kleines Tagebuch für dich</p>
     <h1>Meine Zeit ohne dich, <em>aber mit dir</em></h1>
     <div class="header-line"></div>
@@ -510,9 +567,7 @@
   </footer>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     VIDEO MODAL
-═══════════════════════════════════════════ -->
+<!-- VIDEO MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -526,12 +581,27 @@
 
 <script>
 // ══════════════════════════════════════════════════════════════
+//  TUTORIAL-VIDEO
+//  Ersetze TUTORIAL_VIDEO_ID durch deine echte YouTube-Video-ID
+// ══════════════════════════════════════════════════════════════
+const TUTORIAL_VIDEO = {
+  youtubeId: "TUTORIAL_VIDEO_ID",
+  title: "🎬 So funktioniert dein Kalender"
+};
+
+function openTutorial() {
+  document.getElementById("modalDate").textContent = "✨ Fang hier an!";
+  document.getElementById("modalTitle").textContent = TUTORIAL_VIDEO.title;
+  document.getElementById("videoFrame").src =
+    `https://www.youtube.com/embed/${TUTORIAL_VIDEO.youtubeId}?autoplay=1&rel=0`;
+  document.getElementById("modal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+// ══════════════════════════════════════════════════════════════
 //  VIDEO-DATEN
-//  Format: "YYYY-MM-DD": { youtubeId: "VIDEO_ID", title: "Titel" }
-//  Ersetze VIDEO_ID durch die echte YouTube-Video-ID (z.B. "dQw4w9WgXcQ")
 // ══════════════════════════════════════════════════════════════
 const videos = {
-  // ── Beispiele – bitte durch deine echten YouTube-IDs ersetzen ──
   "2025-08-21": { youtubeId: "9mYwM5Zrfzo", title: "🥬🫛" },
   "2025-08-22": { youtubeId: "pLe9vn3-MQY", title: "🥬🫛" },
   "2025-08-23": { youtubeId: "BoHQ6FmXmQQ", title: "🥬🫛" },
@@ -615,9 +685,8 @@ const videos = {
   "2026-02-17": { youtubeId: "DEINE_VIDEO_ID", title: "🥬🫛" },
 };
 
-// ── Zeitraum-Grenzen ──
-const START_MONTH = { year: 2025, month: 7 };  // August 2025 (0-indexed)
-const END_MONTH   = { year: 2026, month: 4 };  // Mai 2026
+const START_MONTH = { year: 2025, month: 7 };
+const END_MONTH   = { year: 2026, month: 4 };
 
 const MONTH_NAMES = [
   "Januar","Februar","März","April","Mai","Juni",
@@ -633,15 +702,12 @@ function renderCalendar() {
   const grid  = document.getElementById("daysGrid");
   const label = document.getElementById("monthLabel");
   label.textContent = MONTH_NAMES[currentMonth] + " " + currentYear;
-
   grid.innerHTML = "";
 
-  // first weekday of month (0=Sun..6=Sat → convert to Mon-first: 0=Mon..6=Sun)
   const firstDay = new Date(currentYear, currentMonth, 1).getDay();
   const offset   = (firstDay === 0) ? 6 : firstDay - 1;
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-  // empty cells
   for(let i = 0; i < offset; i++){
     const el = document.createElement("div");
     el.className = "day empty";
@@ -665,7 +731,6 @@ function renderCalendar() {
     grid.appendChild(el);
   }
 
-  // nav buttons
   const atStart = currentYear === START_MONTH.year && currentMonth === START_MONTH.month;
   const atEnd   = currentYear === END_MONTH.year   && currentMonth === END_MONTH.month;
   document.getElementById("prevBtn").disabled = atStart;
@@ -700,12 +765,10 @@ function closeModal(){
   document.body.style.overflow = "";
 }
 
-// close on overlay click
 document.getElementById("modal").addEventListener("click", function(e){
   if(e.target === this) closeModal();
 });
 
-// close on Escape
 document.addEventListener("keydown", e => {
   if(e.key === "Escape") closeModal();
 });
