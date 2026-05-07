@@ -816,6 +816,7 @@ if (!counter) {
 }
 counter.textContent = `${monthKeys.length} Videos in diesem Monat · ${totalKeys} insgesamt`;
 }
+  
 function changeMonth(dir){
   currentMonth += dir;
   if(currentMonth > 11){ currentMonth = 0; currentYear++; }
