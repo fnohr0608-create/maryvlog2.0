@@ -800,6 +800,21 @@ function renderCalendar() {
   document.getElementById("prevBtn").disabled = atStart;
   document.getElementById("nextBtn").disabled = atEnd;
 }
+  // Am Ende von renderCalendar(), nach dem Aufbau des Grids:
+const monthKeys = Object.keys(videos).filter(k => {
+  const [y, m] = k.split("-").map(Number);
+  return y === currentYear && (m - 1) === currentMonth && videos[k].youtubeId;
+});
+const totalKeys = Object.keys(videos).filter(k => videos[k].youtubeId).length;
+
+let counter = document.getElementById("monthCounter");
+if (!counter) {
+  counter = document.createElement("p");
+  counter.id = "monthCounter";
+  counter.style.cssText = "text-align:center;margin-top:16px;font-family:'Lora',serif;font-style:italic;font-size:0.82rem;color:var(--muted);";
+  document.querySelector(".calendar-wrap").after(counter);
+}
+counter.textContent = `${monthKeys.length} Videos in diesem Monat · ${totalKeys} insgesamt`;
 
 function changeMonth(dir){
   currentMonth += dir;
