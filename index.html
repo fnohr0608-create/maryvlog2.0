@@ -799,7 +799,7 @@ function renderCalendar() {
   const atEnd   = currentYear === END_MONTH.year   && currentMonth === END_MONTH.month;
   document.getElementById("prevBtn").disabled = atStart;
   document.getElementById("nextBtn").disabled = atEnd;
-}
+
   // Am Ende von renderCalendar(), nach dem Aufbau des Grids:
 const monthKeys = Object.keys(videos).filter(k => {
   const [y, m] = k.split("-").map(Number);
@@ -815,7 +815,7 @@ if (!counter) {
   document.querySelector(".calendar-wrap").after(counter);
 }
 counter.textContent = `${monthKeys.length} Videos in diesem Monat · ${totalKeys} insgesamt`;
-
+}
 function changeMonth(dir){
   currentMonth += dir;
   if(currentMonth > 11){ currentMonth = 0; currentYear++; }
