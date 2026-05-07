@@ -454,7 +454,8 @@
 </style>
 </head>
 <body>
-
+  
+<canvas id="confettiCanvas" style="position:fixed;inset:0;z-index:200;pointer-events:none;width:100%;height:100%;"></canvas>
 <div class="bg-illustration">
 <svg width="100%" height="100%" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -807,19 +808,23 @@ function changeMonth(dir){
   renderCalendar();
 }
 
-function openModal(dateStr){
+function openModal(dateStr) {
   const v = videos[dateStr];
-  if(!v) return;
+  if (!v) return;
 
-  const [y,m,d] = dateStr.split("-");
+  const [y, m, d] = dateStr.split("-");
   document.getElementById("modalDate").textContent =
-    `${parseInt(d)}. ${MONTH_NAMES[parseInt(m)-1]} ${y}`;
+    `${parseInt(d)}. ${MONTH_NAMES[parseInt(m) - 1]} ${y}`;
   document.getElementById("modalTitle").textContent = v.title;
   document.getElementById("videoFrame").src =
     `https://www.youtube.com/embed/${v.youtubeId}?autoplay=1&rel=0`;
-
   document.getElementById("modal").classList.add("open");
   document.body.style.overflow = "hidden";
+
+  if (!openedDates.has(dateStr)) {
+    openedDates.add(dateStr);
+    setTimeout(spawnConfetti, 180); // kurze Verzögerung, erst Modal sehen
+  }
 }
 
 function closeModal(){
@@ -836,6 +841,68 @@ document.addEventListener("keydown", e => {
   if(e.key === "Escape") closeModal();
 });
 
+// ══════════════════════════════════════════════════════
+//  TURTLE & GIRAFFE KONFETTI
+// ══════════════════════════════════════════════════════
+const confettiCanvas = document.getElementById("confettiCanvas");
+const ctx = confettiCanvas ? confettiCanvas.getContext("2d") : null;
+let particles = [];
+let confettiFrame = null;
+const openedDates = new Set();
+
+const EMOJIS = ["🐢","🦒","🐢","🦒","🥬","🫛","✨","🌿"];
+
+function spawnConfetti() {
+  confettiCanvas.width  = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+  particles = [];
+  for (let i = 0; i < 60; i++) {
+    const emoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+    particles.push({
+      x:      Math.random() * confettiCanvas.width,
+      y:      -30 - Math.random() * 200,
+      vy:     2.5 + Math.random() * 3,
+      vx:     (Math.random() - 0.5) * 2.5,
+      rotate: Math.random() * 360,
+      vr:     (Math.random() - 0.5) * 6,
+      scale:  0.7 + Math.random() * 0.9,
+      emoji,
+      alpha:  1,
+    });
+  }
+  if (confettiFrame) cancelAnimationFrame(confettiFrame);
+  animateConfetti();
+}
+
+function animateConfetti() {
+  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  let alive = false;
+  for (const p of particles) {
+    p.x      += p.vx;
+    p.y      += p.vy;
+    p.rotate += p.vr;
+    p.vy     += 0.06; // leichte Schwerkraft
+    if (p.y > confettiCanvas.height - 80) {
+      p.alpha -= 0.035;
+    }
+    if (p.alpha > 0) alive = true;
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.alpha);
+    ctx.translate(p.x, p.y);
+    ctx.rotate((p.rotate * Math.PI) / 180);
+    ctx.font = `${Math.round(p.scale * 28)}px serif`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(p.emoji, 0, 0);
+    ctx.restore();
+  }
+  if (alive) {
+    confettiFrame = requestAnimationFrame(animateConfetti);
+  } else {
+    ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  }
+}
+  
 renderCalendar();
 </script>
 </body>
